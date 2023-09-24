@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import '@master/css';
 import axios from 'axios';
+import {setCookie,getCookie} from 'typescript-cookie';
+
 import { defineEmits,ref } from 'vue'
 
 const username = ref('')
