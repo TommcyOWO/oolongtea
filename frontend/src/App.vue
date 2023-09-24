@@ -8,6 +8,7 @@ import introduce from '@/components/introduce.vue';
 import index from '@/components/index.vue';
 import login from '@/components/login.vue';
 import register from '@/components/register.vue';
+import reset from './components/reset.vue';
 
 const dark = useDark({
   valueDark: 'dark',
@@ -44,6 +45,9 @@ const cEvent = (data: string) => {
     </div>
     <div v-else-if="page === 'register'">
       <register @c_page="cEvent"/>
+    </div>
+    <div v-else-if="page === 'reset'">
+      <reset @c_page="cEvent"/>
     </div>
   </Transition>
 </template>

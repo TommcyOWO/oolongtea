@@ -1,17 +1,20 @@
 <script setup lang="ts">
 import '@master/css';
 import axios from 'axios';
+import { defineEmits,ref } from 'vue'
+
+const username = ref('')
+const password = ref('')
 
 const login = async() =>{
 
 }
 
-import { defineEmits } from 'vue'
 
 const emits = defineEmits(['c_page'])
 
-const cpage = () => {
-  emits('c_page', 'register');
+const cpage = (page:string) => {
+  emits('c_page', page);
 }
 
 </script>
@@ -22,8 +25,10 @@ const cpage = () => {
       <input class="mt:50px w:200px h:20px m:10px b:none r:5" type="text" placeholder="使用者名稱">
       <input class="w:200px h:20px m:10px b:none r:5" type="password" placeholder="使用者密碼">
       <button class="w:200px h:20px m:10px b:none r:5 cursor:pointer">確定</button>
-    
-      <h3 @click="cpage()" class="color:white@dark text:center mt:100 cursor:pointer">註冊</h3>
+      <div class="color:white@dark text:center mt:100">
+        <h3 @click="cpage('register')" class="inline-block cursor:pointer ">註冊</h3> |
+        <h3 @click="cpage('reset')" class="inline-block cursor:pointer">忘記密碼</h3>
+      </div>
     </div>
   </div>
 
