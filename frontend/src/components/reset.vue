@@ -30,8 +30,8 @@ const cpage = (page: string) => {
       <input v-bind="confirm_password" class="w:200px h:20px m:10px b:none r:5" type="password" placeholder="確認密碼">
       <button class="w:200px h:20px m:10px b:none r:5 cursor:pointer">確定</button>
       <div class="color:white@dark text:center mt:25">
-        <h3 @click="cpage('register')" class="inline-block cursor:pointer ">註冊</h3> |
-        <h3 @click="cpage('reset')" class="inline-block cursor:pointer">忘記密碼</h3>
+        <h3 @click="cpage('login')" class="inline-block cursor:pointer">登入</h3> |
+        <h3 @click="cpage('register')" class="inline-block cursor:pointer ">註冊</h3>
       </div>
     </div>
   </div>

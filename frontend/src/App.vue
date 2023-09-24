@@ -24,21 +24,25 @@ const cEvent = (data: string) => {
 
 </script>
 <template>
-  <nav class="mx:30px my:15px f:20 bd:blur(5px) color:white@dark">
+  <nav class="m:30px f:20 color:white@dark">
+    <div class="flex ai:center">
     <!-- <div v-if="page === 'rea'"> -->
-      <span @click="page = 'index'" class="cursor:pointer ~300ms|ease-in mx:15px" >首頁</span>
+      <span @click="page = 'index'" class="cursor:pointer ~300ms|ease-in mx:15px">
+        <img class="top:20px z:2 h:50px w:50px" src="@/assets/icon.png">
+        <a class="rel bottom:15px ml:10px">Healthyble </a><a class="rel bottom:15px color:beryl-76">健康寶</a></span>
       <span @click="page = 'introduce'" class="cursor:pointer ~300ms|ease-in mx:15px" >使用者頁面</span>
       <!-- </div> -->
-      <IconBlur @click="toggle()" class="mx:20px cursor:pointer float:right color:white@dark color:black@light"/>
+    </div>
+      <IconBlur @click="toggle()" class="rel bottom:40 ml:20px cursor:pointer float:right color:white@dark color:black@light"/>
       <!-- <span @click="page = 'singout'" class="cursor:pointer float:right ~300ms|ease-in" >登出</span> -->
-      <span v-if="page !== 'rea'" @click="page = 'login'" class="float:right cursor:pointer ~300ms|ease-in" >登入</span>
+      <span v-if="page !== 'rea'" @click="page = 'login'" class="rel bottom:40 float:right cursor:pointer ~300ms|ease-in" >登入</span>
   </nav>
   <Transition name="Transition" mode="out-in">
     <div v-if="page === 'introduce'">
-    <introduce/>
+    <introduce @c_page="cEvent"/>
     </div>
     <div v-else-if="page === 'index'">
-      <index/>
+      <index @c_page="cEvent"/>
     </div>
     <div v-else-if="page === 'login'">
       <login @c_page="cEvent"/>

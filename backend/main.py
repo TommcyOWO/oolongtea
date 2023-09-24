@@ -10,6 +10,7 @@ from slowapi.errors import RateLimitExceeded
 
 import json
 import math
+import pymongo
 
 #過濾器
 from model import *
