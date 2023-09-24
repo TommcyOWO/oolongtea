@@ -19,7 +19,7 @@ from oauth import *
 
 #初始化
 limiter = Limiter(key_func=get_remote_address)
-app = FastAPI(redoc_url=None)
+app = FastAPI(redoc_url=None,docs_url=None)
 app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
@@ -106,5 +106,5 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 
 if __name__ == "__main__":
-    uvicorn.run(app,host="192.168.1.110",port=5000)
+    uvicorn.run(app,host="0.0.0.0",port=5000)
     #uvicorn.run(app,host='0.0.0.0',ssl_keyfile='./key.pem',ssl_certfile='./cert.pem')

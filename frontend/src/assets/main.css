@@ -2,7 +2,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  text-decoration: none
+  text-decoration: none;
+  font-family: Microsoft JhengHei;
 }
 
 /*firefox chrome IE/Edge 隱藏滾動條/*/

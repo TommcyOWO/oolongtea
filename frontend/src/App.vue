@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { IconBlur } from '@tabler/icons-vue';
 import '@master/css';
-import { useDark, useToggle, useLocalStorage } from '@vueuse/core/index.cjs';
-import { ref } from 'vue';
+import { useDark, useToggle } from '@vueuse/core/index.cjs';
+import { ref, watch } from 'vue';
 
 import introduce from '@/components/introduce.vue';
 import login from '@/components/login.vue';
@@ -14,18 +14,26 @@ const dark = useDark({
 });
 const toggle = useToggle(dark);
 
-const page = ref('index')
+const storedPage = localStorage.getItem('page');
+
+const page = ref(storedPage !== null ? storedPage : '');
+
+watch(page, (newVal, oldVal) => {
+  if (newVal !== null) {
+    localStorage.setItem('page', newVal);
+  }
+});
 
 </script>
 <template>
   <nav class="mx:30px my:15px f:20 bd:blur(5px) color:white@dark">
     <!-- <div v-if="page === 'rea'"> -->
-      <span @click="page = 'index'" class="cursor:pointer ~300ms|ease-in mx:15px" >index</span>
-      <span @click="page = 'introduce'" class="cursor:pointer ~300ms|ease-in mx:15px" >userpage</span>
+      <span @click="page = 'index'" class="cursor:pointer ~300ms|ease-in mx:15px" >首頁</span>
+      <span @click="page = 'introduce'" class="cursor:pointer ~300ms|ease-in mx:15px" >使用者頁面</span>
       <!-- </div> -->
-      <IconBlur @click="toggle()" class="cursor:pointer float:right color:white@dark color:black@light"/>
-      <span @click="page = 'singout'" class="cursor:pointer float:right ~300ms|ease-in mx:15px" >singout</span>
-      <!-- <span v-if="page !== 'rea'" @click="page = 'login'" class="float:right cursor:pointer ~300ms|ease-in mx:15px" >login</span> -->
+      <IconBlur @click="toggle()" class="mx:20px cursor:pointer float:right color:white@dark color:black@light"/>
+      <!-- <span @click="page = 'singout'" class="cursor:pointer float:right ~300ms|ease-in" >登出</span> -->
+      <span v-if="page !== 'rea'" @click="page = 'login'" class="float:right cursor:pointer ~300ms|ease-in" >登入</span>
   </nav>
   <Transition name="Transition" mode="out-in">
     <div v-if="page === 'introduce'">
