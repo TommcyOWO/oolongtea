@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { IconBlur } from '@tabler/icons-vue';
 import '@master/css';
-import { useDark, useToggle } from '@vueuse/core/index.cjs';
-import { ref, watch } from 'vue';
+import { useDark, useToggle, useLocalStorage } from '@vueuse/core/index.cjs';
+import { ref } from 'vue';
 
 import introduce from '@/components/introduce.vue';
-import login from '@/components/login.vue';
 import index from '@/components/index.vue';
+import login from '@/components/login.vue';
+import register from '@/components/register.vue';
 
 const dark = useDark({
   valueDark: 'dark',
@@ -14,15 +15,11 @@ const dark = useDark({
 });
 const toggle = useToggle(dark);
 
-const storedPage = localStorage.getItem('page');
+const page = useLocalStorage('page', '');
 
-const page = ref(storedPage !== null ? storedPage : '');
-
-watch(page, (newVal, oldVal) => {
-  if (newVal !== null) {
-    localStorage.setItem('page', newVal);
-  }
-});
+const cEvent = (data: string) => {
+  page.value = data;
+}
 
 </script>
 <template>
@@ -43,17 +40,20 @@ watch(page, (newVal, oldVal) => {
       <index/>
     </div>
     <div v-else-if="page === 'login'">
-      <login/>
+      <login @c_page="cEvent"/>
+    </div>
+    <div v-else-if="page === 'register'">
+      <register @c_page="cEvent"/>
     </div>
   </Transition>
 </template>
 <style scoped>
 .Transition-enter-active {
-  transition: all 0.3s ease-out;
+  transition: all 0.4s ease-out;
 }
 
 .Transition-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+  transition: all 0.6s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
 .Transition-enter-from,
