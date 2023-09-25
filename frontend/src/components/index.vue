@@ -18,7 +18,7 @@ const cpage = (page: string) => {
     <button @click="cpage('login')" class="color:white cursor:pointer f:18 f:semibold h:50px w:120 mr:10px b:none bg:beryl-76"><b>登入</b></button>
     <button @click="cpage('register')" class=" cursor:pointer f:18 f:semibold h:50px w:120 b:4|solid|white@dark b:4|solid|black@light color:white@dark bg:none">註冊</button>
   </div>
-  <div class="rel float:right top:450 h:30 w:60% bg:beryl-76"></div>
+  <div class="rel float:right top:70vh h:30 w:60% bg:beryl-76"></div>
 
 </template>
 <style scoped>
