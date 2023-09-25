@@ -13,10 +13,10 @@ const reset = async () => {
 }
 
 
-const emits = defineEmits(['c_page'])
+const emits = defineEmits(['res_c_page'])
 
 const cpage = (page: string) => {
-  emits('c_page', page);
+  emits('res_c_page', page);
 }
 
 </script>

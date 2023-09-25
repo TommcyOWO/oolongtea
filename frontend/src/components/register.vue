@@ -12,10 +12,10 @@ const register = async () => {
 }
 
 
-const emits = defineEmits(['c_page'])
+const emits = defineEmits(['reg_c_page'])
 
 const cpage = (page: string) => {
-  emits('c_page', page);
+  emits('reg_c_page', page);
 }
 
 </script>

@@ -2,13 +2,13 @@
 import { IconBlur } from '@tabler/icons-vue';
 import '@master/css';
 import { useDark, useToggle, useLocalStorage } from '@vueuse/core/index.cjs';
-import { ref } from 'vue';
 
-import introduce from '@/components/introduce.vue';
+import user_page from '@/components/user_page.vue'
 import index from '@/components/index.vue';
 import login from '@/components/login.vue';
 import register from '@/components/register.vue';
 import reset from './components/reset.vue';
+
 
 const dark = useDark({
   valueDark: 'dark',
@@ -16,7 +16,8 @@ const dark = useDark({
 });
 const toggle = useToggle(dark);
 
-const page = useLocalStorage('page', '');
+const page = useLocalStorage('page', 'index');
+console.log(localStorage)
 
 const cEvent = (data: string) => {
   page.value = data;
@@ -30,7 +31,7 @@ const cEvent = (data: string) => {
       <span @click="page = 'index'" class="cursor:pointer ~300ms|ease-in mx:15px">
         <img class="top:20px z:2 h:50px w:50px" src="@/assets/icon.png">
         <a class="rel bottom:15px ml:10px">Healthyble </a><a class="rel bottom:15px color:beryl-76">健康寶</a></span>
-      <span @click="page = 'introduce'" class="cursor:pointer ~300ms|ease-in mx:15px" >使用者頁面</span>
+      <span @click="page = 'user_page'" class="cursor:pointer ~300ms|ease-in mx:15px" >使用者頁面</span>
       <!-- </div> -->
     </div>
       <IconBlur @click="toggle()" class="rel bottom:40 ml:20px cursor:pointer float:right color:white@dark color:black@light"/>
@@ -38,20 +39,20 @@ const cEvent = (data: string) => {
       <span v-if="page !== 'rea'" @click="page = 'login'" class="rel bottom:40 float:right cursor:pointer ~300ms|ease-in" >登入</span>
   </nav>
   <Transition name="Transition" mode="out-in">
-    <div v-if="page === 'introduce'">
-    <introduce @c_page="cEvent"/>
+    <div v-if="page === 'user_page'">
+    <user_page/>
     </div>
     <div v-else-if="page === 'index'">
-      <index @c_page="cEvent"/>
+      <index @i_c_page="cEvent"/>
     </div>
     <div v-else-if="page === 'login'">
-      <login @c_page="cEvent"/>
+      <login @lo_c_page="cEvent"/>
     </div>
     <div v-else-if="page === 'register'">
-      <register @c_page="cEvent"/>
+      <register @reg_c_page="cEvent"/>
     </div>
     <div v-else-if="page === 'reset'">
-      <reset @c_page="cEvent"/>
+      <reset @res_c_page="cEvent"/>
     </div>
   </Transition>
 </template>

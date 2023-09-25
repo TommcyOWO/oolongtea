@@ -13,10 +13,10 @@ const login = async() =>{
 }
 
 
-const emits = defineEmits(['c_page'])
+const emits = defineEmits(['lo_c_page'])
 
 const cpage = (page:string) => {
-  emits('c_page', page);
+  emits('lo_c_page', page);
 }
 
 </script>
