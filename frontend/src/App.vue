@@ -25,7 +25,7 @@ const cEvent = (data: string) => {
 
 </script>
 <template>
-  <nav class="m:30px f:20 color:white@dark">
+  <nav class="m:30px f:20 f:semibold color:white@dark">
     <div class="flex ai:center">
     <!-- <div v-if="page === 'rea'"> -->
       <span @click="page = 'index'" class="cursor:pointer ~300ms|ease-in mx:15px">
