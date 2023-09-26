@@ -29,8 +29,8 @@ const cEvent = (data: string) => {
     <div class="flex ai:center">
     <!-- <div v-if="page === 'rea'"> -->
       <span @click="page = 'index'" class="cursor:pointer ~300ms|ease-in mx:15px">
-        <img class="top:20px z:2 h:50px w:50px" src="@/assets/icon.png">
-        <a class="rel bottom:15px ml:10px">Healthyble </a><a class="rel bottom:15px color:beryl-76">健康寶</a></span>
+        <img class="float:left h:50px w:50px" src="@/assets/icon.png">
+        <a class="rel top:12px ml:10px">Healthyble </a><a class="rel top:12px color:beryl-76">健康寶</a></span>
       <span @click="page = 'user_page'" class="cursor:pointer ~300ms|ease-in mx:15px" >使用者頁面</span>
       <!-- </div> -->
     </div>
