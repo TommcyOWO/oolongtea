@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IconBlur } from '@tabler/icons-vue';
+import { IconBlur,IconMenu2 } from '@tabler/icons-vue';
 import '@master/css';
 import { useDark, useToggle, useLocalStorage } from '@vueuse/core/index.cjs';
 
@@ -25,19 +25,19 @@ const cEvent = (data: string) => {
 
 </script>
 <template>
-  <nav class="m:30px f:20 f:semibold color:white@dark">
-    <div class="flex ai:center">
-    <!-- <div v-if="page === 'rea'"> -->
-      <span @click="page = 'index'" class="cursor:pointer ~300ms|ease-in mx:15px">
-        <img class="float:left h:50px w:50px" src="@/assets/icon.png">
-        <a class="rel top:12px ml:10px">Healthyble </a><a class="rel top:12px color:beryl-76">健康寶</a></span>
-      <span @click="page = 'user_page'" class="cursor:pointer ~300ms|ease-in mx:15px" >使用者頁面</span>
-      <!-- </div> -->
-    </div>
-      <IconBlur @click="toggle()" class="rel bottom:40 ml:20px cursor:pointer float:right color:white@dark color:black@light"/>
-      <!-- <span @click="page = 'singout'" class="cursor:pointer float:right ~300ms|ease-in" >登出</span> -->
-      <span v-if="page !== 'rea'" @click="page = 'login'" class="rel bottom:40 float:right cursor:pointer ~300ms|ease-in" >登入</span>
-  </nav>
+  <div class="flex jc:space-between ai:center color:white@dark mt:20px p:10px f:20 f:semibold">
+      <IconMenu2 class="hide@>md"/>
+          <ul class="lt:none hide@<md flex ai:center mx:20px">
+              <li @click="page = 'index'" class="cursor:pointer inline ml:5px mr:20px">
+                <img src="@/assets/icon.png" class="h:50 w:50 float:left">
+              <a class="rel top:12px">Healthyble</a><a class="rel top:12px color:beryl-76">健康寶</a></li>
+              <li @click="page = 'user_page'" class="cursor:pointer inline mx:20px">使用者頁面</li>
+          </ul>
+          <div class="rel flex right:35px text:center">
+            <a class="mx:30px">登入</a>
+            <IconBlur class="cursor:pointer" @click="toggle()"/>
+          </div>
+  </div>
   <Transition name="Transition" mode="out-in">
     <div v-if="page === 'user_page'">
     <user_page/>
