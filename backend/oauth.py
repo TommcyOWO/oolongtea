@@ -8,8 +8,6 @@ from passlib.context import CryptContext
 
 from model import *
 
-path = './db/'
-    
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 SECRET_KEY = "46936036427095cb76ed002fe7a168c24ee815003b5e5416916cd718f53a9b5d"

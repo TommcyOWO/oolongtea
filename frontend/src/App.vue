@@ -34,7 +34,7 @@ const cEvent = (data: string) => {
               <li @click="page = 'user_page'" class="cursor:pointer inline mx:20px">使用者頁面</li>
           </ul>
           <div class="rel flex right:35px text:center">
-            <a class="mx:30px">登入</a>
+            <a @click="page = 'login'" class="cursor:pointer mx:30px">登入</a>
             <IconBlur class="cursor:pointer" @click="toggle()"/>
           </div>
   </div>

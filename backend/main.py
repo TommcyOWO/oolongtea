@@ -10,7 +10,7 @@ from slowapi.errors import RateLimitExceeded
 
 import json
 import math
-import pymongo
+from pymongo import MongoClient
 
 #過濾器
 from model import *
@@ -35,6 +35,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+#DB 初始化
+#DB herf
+client = MongoClient("mongodb://localhost:27017/")
+
+#DB setup
+db = client['count']
+
+users = db.users
+id_users = db.id_users
 
 #阻擋request
 @app.exception_handler(RateLimitExceeded)
@@ -62,10 +72,10 @@ async def not_found_exception_handler(request: Request, exc: HTTPException):
 
 #main
 #oauth path
+
 @app.post("/register")
 async def register_user(user: User):
-    with open(path + 'count.json', 'r') as file:
-        users_db = json.load(file)
+    users_db = users.find()
     if user.username in users_db:
         raise HTTPException(status_code=400, detail="Username already exists")
     
@@ -75,28 +85,26 @@ async def register_user(user: User):
         "username": user.username,
         "password": hashed_password
     }
-    with open(path + 'count.json', 'w') as file:
-        json.dump(users_db, file, indent=4)
+    users.insert_one(users_db)
     return {"message": "User registered successfully"}
 
-@app.post("/reset")
-async def reset_acount(user:User):
-    with open(path+'count.json','r') as file:
-        reset_acount = json.load(file)
-    if user.username not in reset_acount:
-        raise HTTPException(status_code=400, detail="Username not exists.")
-    if user.email != reset_acount[user.username]['email']:
-        raise HTTPException(status_code=400, detail="Email do not match.")
-    hashed_password = password_context.hash(user.password)
-    with open(path+'count.json','w') as file:
-        reset_acount[user.username]["password"] = hashed_password
-        json.dump(reset_acount,file,indent=4)
-    return {"message":"Reset done"}
+# @app.post("/reset")
+# async def reset_acount(user:User):
+    # with open(path+'count.json','r') as file:
+        # reset_acount = json.load(file)
+    # if user.username not in reset_acount:
+        # raise HTTPException(status_code=400, detail="Username not exists.")
+    # if user.email != reset_acount[user.username]['email']:
+        # raise HTTPException(status_code=400, detail="Email do not match.")
+    # hashed_password = password_context.hash(user.password)
+    # with open(path+'count.json','w') as file:
+        # reset_acount[user.username]["password"] = hashed_password
+        # json.dump(reset_acount,file,indent=4)
+    # return {"message":"Reset done"}
 
 @app.post("/logon")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    with open(path+'count.json','r') as file:
-        users_db = json.load(file)
+    users_db = users.find()
     if form_data.username not in users_db:
         raise HTTPException(status_code=400, detail="Wrong password or username")
     user = users_db[form_data.username]
