@@ -9,6 +9,7 @@
 - vue3
 - axios
 - master/css
+- react native
 ## 後端：
 - fastapi
 - slowapi
@@ -16,3 +17,5 @@
 - passlib
 - datetime
 - jwt
+## 資料庫：
+- mongodb
