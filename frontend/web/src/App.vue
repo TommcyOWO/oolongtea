@@ -26,9 +26,9 @@ const cEvent = (data: string) => {
 </script>
 <template>
   <div class="flex jc:space-between ai:center color:white@dark mt:20px p:10px f:20 f:semibold">
-      <IconMenu2 class="hide@>md"/>
+      <IconMenu2 class="hide@>md mx:20px"/>
           <ul class="lt:none hide@<md flex ai:center mx:20px">
-              <li @click="page = 'index'" class="cursor:pointer inline ml:5px mr:20px">
+              <li @click="page = 'index'" class="cursor:pointer inline ml:5px">
                 <img src="@/assets/icon.png" class="h:50 w:50 float:left">
               <a class="rel top:12px">Healthyble</a><a class="rel top:12px color:beryl-76">健康寶</a></li>
               <li @click="page = 'user_page'" class="cursor:pointer inline mx:20px">使用者頁面</li>
