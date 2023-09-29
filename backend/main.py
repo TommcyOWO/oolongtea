@@ -23,7 +23,7 @@ app.state.limiter = limiter
 app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 origins = [
-    
+    "*"
 ]
 
 app.add_middleware(
@@ -70,7 +70,6 @@ async def not_found_exception_handler(request: Request, exc: HTTPException):
 
 #main
 #oauth path
-
 @app.post("/register")
 async def register_user(user: User):
     users_db = users.find_one({"name":user.username,"email":user.email})
@@ -87,30 +86,28 @@ async def register_user(user: User):
     users.insert_one(users_db)
     return {"message": "User registered successfully"}
 
-# @app.post("/reset")
-# async def reset_acount(user:User):
-    # with open(path+'count.json','r') as file:
-        # reset_acount = json.load(file)
-    # if user.username not in reset_acount:
-        # raise HTTPException(status_code=400, detail="Username not exists.")
-    # if user.email != reset_acount[user.username]['email']:
-        # raise HTTPException(status_code=400, detail="Email do not match.")
-    # hashed_password = password_context.hash(user.password)
-    # with open(path+'count.json','w') as file:
-        # reset_acount[user.username]["password"] = hashed_password
-        # json.dump(reset_acount,file,indent=4)
-    # return {"message":"Reset done"}
-
 @app.post("/logon")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
     name = form_data.username
     password = form_data.password
-    users_db = users.find_one({"name":name,"password":password})
-    if users_db == None | password_context.verify(password, users_db["password"]):
+
+    users_db = users.find_one({"name":name})
+    if users_db == None or password_context.verify(password,users_db["password"]) == None:
         raise HTTPException(status_code=400, detail="Incorrect username or password")
-        
-    access_token = create_access_token(data={"sub": form_data.username})
+
+    access_token = create_access_token(data={"sub": password})
     return {"access_token": access_token, "token_type": "bearer"}
+
+@app.post("/reset")
+async def reset_acount(user:User):
+    reset_acount_db = users.find_one({'name':user.username,'email':user.email})
+    if reset_acount_db == None:
+        raise HTTPException(status_code=400, detail="Username or Email not match.")
+
+    h_password = password_context.hash(user.password)
+    users.update_one({'name':user.username,'email':user.email},{'$set': {'password':h_password }})
+    
+    return {"message":"Reset done"}
 
 if __name__ == "__main__":
     uvicorn.run(app,host="0.0.0.0",port=5000)
