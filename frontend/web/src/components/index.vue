@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import '@master/css';
-import { defineEmits } from 'vue';
 
 const emits = defineEmits(['i_c_page'])
 

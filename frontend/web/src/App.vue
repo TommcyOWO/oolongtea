@@ -5,7 +5,7 @@ import { useDark, useToggle, useLocalStorage } from '@vueuse/core/index.cjs';
 
 import user_page from '@/components/user_page.vue'
 import index from '@/components/index.vue';
-import login from '@/components/login.vue';
+import logon from '@/components/logon.vue';
 import register from '@/components/register.vue';
 import reset from './components/reset.vue';
 
@@ -17,7 +17,6 @@ const dark = useDark({
 const toggle = useToggle(dark);
 
 const page = useLocalStorage('page', 'index');
-console.log(localStorage)
 
 const cEvent = (data: string) => {
   page.value = data;
@@ -34,7 +33,7 @@ const cEvent = (data: string) => {
               <li @click="page = 'user_page'" class="cursor:pointer inline mx:20px">使用者頁面</li>
           </ul>
           <div class="rel flex right:35px text:center">
-            <a @click="page = 'login'" class="cursor:pointer mx:30px">登入</a>
+            <a @click="page = 'logon'" class="cursor:pointer mx:30px">登入</a>
             <IconBlur class="cursor:pointer" @click="toggle()"/>
           </div>
   </div>
@@ -45,8 +44,8 @@ const cEvent = (data: string) => {
     <div v-else-if="page === 'index'">
       <index @i_c_page="cEvent"/>
     </div>
-    <div v-else-if="page === 'login'">
-      <login @lo_c_page="cEvent"/>
+    <div v-else-if="page === 'logon'">
+      <logon @lo_c_page="cEvent"/>
     </div>
     <div v-else-if="page === 'register'">
       <register @reg_c_page="cEvent"/>
