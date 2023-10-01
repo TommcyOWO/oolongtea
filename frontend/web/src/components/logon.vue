@@ -1,14 +1,23 @@
 <script setup lang="ts">
 import '@master/css';
 import axios from 'axios';
-import {setCookie} from 'typescript-cookie';
+import {getCookie, setCookie} from 'typescript-cookie';
 import { url } from '@/assets/conf/url';
 
 import { ref } from 'vue'
 
 const username = ref('')
 const password = ref('')
+const emits = defineEmits(['lo_c_page'])
 
+const cpage = (page: string) => {
+  emits('lo_c_page', page);
+}
+
+const token = getCookie('token')
+if (token !== undefined) {
+  cpage('index')
+}
 
 const login = async() =>{
   const data = new URLSearchParams();
@@ -22,22 +31,14 @@ const login = async() =>{
   };
   try {
     const response = await axios.post(url+'/logon', data, config);
-    await new Promise(resolve => setTimeout(resolve, 1000));
     const token = response.data.access_token;
     const expirationDate = new Date();
     expirationDate.setTime(expirationDate.getTime() + 30 * 60 * 1000);
     setCookie('token', token, { expires: expirationDate });
-    console.log('Cookie set');
+    cpage('index')
   }catch(error){
     console.error(error)
   }
-}
-
-
-const emits = defineEmits(['lo_c_page'])
-
-const cpage = (page:string) => {
-  emits('lo_c_page', page);
 }
 
 </script>

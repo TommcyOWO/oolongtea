@@ -4,6 +4,7 @@ import axios from 'axios';
 import { url } from '@/assets/conf/url';
 
 import { ref } from 'vue'
+import { getCookie } from 'typescript-cookie';
 
 let error_content:any = ref('')
 const email = ref('')
@@ -15,6 +16,11 @@ const emits = defineEmits(['res_c_page'])
 
 const cpage = (page: string) => {
   emits('res_c_page', page);
+}
+
+const token = getCookie('token')
+if (token !== undefined) {
+  cpage('index')
 }
 
 const reset = async () => {

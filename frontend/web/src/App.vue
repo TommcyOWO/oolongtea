@@ -1,14 +1,17 @@
 <script setup lang="ts">
 import { IconBlur,IconMenu2 } from '@tabler/icons-vue';
 import '@master/css';
-import { useDark, useToggle, useLocalStorage } from '@vueuse/core/index.cjs';
+import { useDark, useToggle, useLocalStorage } from '@vueuse/core';
+import { getCookie, removeCookie } from 'typescript-cookie';
+import { ref } from 'vue';
 
 import user_page from '@/components/user_page.vue'
 import index from '@/components/index.vue';
 import logon from '@/components/logon.vue';
 import register from '@/components/register.vue';
-import reset from './components/reset.vue';
+import reset from '@/components/reset.vue';
 
+const token = ref(getCookie('token'))
 
 const dark = useDark({
   valueDark: 'dark',
@@ -18,8 +21,15 @@ const toggle = useToggle(dark);
 
 const page = useLocalStorage('page', 'index');
 
-const cEvent = (data: string) => {
+const cEvent = (data: string) => {  
   page.value = data;
+}
+
+const singout = () => {
+  removeCookie('token')
+  token.value = 'null';
+  console.log(token.value)
+  cEvent('logon')
 }
 
 </script>
@@ -30,29 +40,30 @@ const cEvent = (data: string) => {
               <li @click="page = 'index'" class="cursor:pointer inline ml:5px">
                 <img src="@/assets/icon.png" class="h:50 w:50 float:left">
               <a class="rel top:12px">Healthyble</a><a class="rel top:12px color:beryl-76">健康寶</a></li>
-              <li @click="page = 'user_page'" class="cursor:pointer inline mx:20px">使用者頁面</li>
+              <li v-if="token" @click="page = 'user_page'" class="cursor:pointer inline mx:20px">使用者頁面</li>
           </ul>
           <div class="rel flex right:35px text:center">
-            <a @click="page = 'logon'" class="cursor:pointer mx:30px">登入</a>
+              <a v-if="token" @click="singout()" :key="token" class="cursor:pointer mx:30px">登出</a>
+              <a v-else @click="page = 'logon'" class="cursor:pointer mx:30px">登入</a>
             <IconBlur class="cursor:pointer" @click="toggle()"/>
           </div>
   </div>
   <Transition name="Transition" mode="out-in">
-    <div v-if="page === 'user_page'">
-    <user_page/>
-    </div>
-    <div v-else-if="page === 'index'">
-      <index @i_c_page="cEvent"/>
-    </div>
-    <div v-else-if="page === 'logon'">
-      <logon @lo_c_page="cEvent"/>
-    </div>
-    <div v-else-if="page === 'register'">
-      <register @reg_c_page="cEvent"/>
-    </div>
-    <div v-else-if="page === 'reset'">
-      <reset @res_c_page="cEvent"/>
-    </div>
+      <div v-if="page === 'user_page'">
+      <user_page/>
+      </div>
+      <div v-else-if="page === 'index'">
+        <index @i_c_page="cEvent"/>
+      </div>
+      <div v-else-if="page === 'logon'">
+        <logon @lo_c_page="cEvent"/>
+      </div>
+      <div v-else-if="page === 'register'">
+        <register @reg_c_page="cEvent"/>
+      </div>
+      <div v-else-if="page === 'reset'">
+        <reset @res_c_page="cEvent"/>
+      </div>
   </Transition>
 </template>
 <style scoped>
