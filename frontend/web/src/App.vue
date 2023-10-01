@@ -23,12 +23,12 @@ const page = useLocalStorage('page', 'index');
 
 const cEvent = (data: string) => {  
   page.value = data;
+  window.location.reload()
 }
 
 const singout = () => {
   removeCookie('token')
   token.value = 'null';
-  console.log(token.value)
   cEvent('logon')
 }
 
@@ -40,11 +40,11 @@ const singout = () => {
               <li @click="page = 'index'" class="cursor:pointer inline ml:5px">
                 <img src="@/assets/icon.png" class="h:50 w:50 float:left">
               <a class="rel top:12px">Healthyble</a><a class="rel top:12px color:beryl-76">健康寶</a></li>
-              <li v-if="token" @click="page = 'user_page'" class="cursor:pointer inline mx:20px">使用者頁面</li>
+              <li v-if="token" :key="token" @click="page = 'user_page'" class="cursor:pointer inline mx:20px">使用者頁面</li>
           </ul>
           <div class="rel flex right:35px text:center">
-              <a v-if="token" @click="singout()" :key="token" class="cursor:pointer mx:30px">登出</a>
-              <a v-else @click="page = 'logon'" class="cursor:pointer mx:30px">登入</a>
+            <a v-if="token" @click="singout()" :key="token" class="cursor:pointer mx:30px">登出</a>
+            <a v-else @click="page = 'logon'" class="cursor:pointer mx:30px">登入</a>
             <IconBlur class="cursor:pointer" @click="toggle()"/>
           </div>
   </div>
