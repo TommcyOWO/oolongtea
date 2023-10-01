@@ -12,6 +12,9 @@ const emits = defineEmits(['lo_c_page'])
 
 const cpage = (page: string) => {
   emits('lo_c_page', page);
+  setTimeout(() => {
+    window.location.reload();
+  }, 300)
 }
 
 const token = getCookie('token')
