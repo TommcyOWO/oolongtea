@@ -12,6 +12,7 @@ import register from '@/components/register.vue';
 import reset from '@/components/reset.vue';
 
 const token = ref(getCookie('token'))
+console.log(token.value)
 
 const dark = useDark({
   valueDark: 'dark',
@@ -27,7 +28,6 @@ const cEvent = (data: string) => {
 
 const singout = () => {
   removeCookie('token')
-  token.value = 'null';
   cEvent('logon')
   setTimeout(() => {
     window.location.reload();
@@ -45,8 +45,8 @@ const singout = () => {
               <li v-if="token" @click="page = 'user_page'" class="cursor:pointer inline mx:20px">使用者頁面</li>
           </ul>
           <div class="rel flex right:35px text:center">
-            <a v-if="token" @click="singout()" class="cursor:pointer mx:30px">登出</a>
-            <a v-else @click="page = 'logon'" class="cursor:pointer mx:30px">登入</a>
+              <a v-if="token" @click="singout()" class="cursor:pointer mx:30px">登出</a>
+              <a v-else-if="token === undefined" @click="page = 'logon'" class="cursor:pointer mx:30px">登入</a>
             <IconBlur class="cursor:pointer" @click="toggle()"/>
           </div>
   </div>
