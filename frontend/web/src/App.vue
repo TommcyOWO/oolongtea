@@ -34,6 +34,11 @@ const singout = () => {
   }, 300)
 }
 
+const handleAuth = () => {
+  if (token.value) singout()
+  else page.value = 'logon'
+}
+
 </script>
 <template>
   <div class="flex jc:space-between ai:center color:white@dark mt:20px p:10px f:20 f:semibold">
@@ -45,8 +50,9 @@ const singout = () => {
               <li v-if="token" @click="page = 'user_page'" class="cursor:pointer inline mx:20px">使用者頁面</li>
           </ul>
           <div class="rel flex right:35px text:center">
-              <a v-if="token" @click="singout()" class="cursor:pointer mx:30px">登出</a>
-              <a v-else-if="token === undefined" @click="page = 'logon'" class="cursor:pointer mx:30px">登入</a>
+            <a class="cursor:pointer mx:30px" @click="handleAuth">
+            {{ token ? '登出' : '登入' }}
+            </a>
             <IconBlur class="cursor:pointer" @click="toggle()"/>
           </div>
   </div>
